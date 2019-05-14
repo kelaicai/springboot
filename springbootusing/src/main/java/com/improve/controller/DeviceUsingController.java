@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,6 +64,21 @@ public class DeviceUsingController {
 		return result;
 	}
 	
+	@RequestMapping(value="findUsingById",method=RequestMethod.GET)
+	public DeviceUsing findUsingById(@RequestParam("id") Integer id)
+	{
+		DeviceUsing result=null;
+		try {
+			result=deviceUsingService.findUsingById(id);
+			System.out.println("###findUsingById success###  "+id);
+		}catch(Exception e)
+		{
+			System.out.println("###findUsingById error###  "+id);
+		}
+	
+		return result;
+	}
+	
 	//向上提交使用记录
 	@RequestMapping(value="/usingApply",method=RequestMethod.GET)
 	public Map<String,Object> usingApply(
@@ -71,7 +87,8 @@ public class DeviceUsingController {
 			@RequestParam("timeLong") Integer timeLong,
 			@RequestParam("assetId") String assetId,
 			@RequestParam("teacher") String teacher,
-			@RequestParam("time") String time
+			@RequestParam("time") String time,
+			@RequestParam("assetName") String assetName
 			)
 	{
 		Map<String,Object> result=new HashMap<String,Object>();
@@ -83,6 +100,8 @@ public class DeviceUsingController {
 			deviceUsing.setTimeLong(timeLong);
 			deviceUsing.setTeacher(teacher);
 			deviceUsing.setTime(time);
+			deviceUsing.setAssetName(assetName);
+			
 			deviceUsingService.save(deviceUsing);
 			result.put("status", "success");
 			System.out.println("###deviceUsingApply success####");
@@ -92,7 +111,33 @@ public class DeviceUsingController {
 			result.put("status", e);
 		}
 		return result;
+		
+		
+		
 	}
 	
-		
+	@GetMapping("/updateUsing")
+	public Map<String,Object> updateUsing(
+			@RequestParam("date") String date,
+			@RequestParam("deviceUser") String deviceUser,
+			@RequestParam("timeLong") Integer timeLong,
+			@RequestParam("assetId") String assetId,
+			@RequestParam("teacher") String teacher,
+			@RequestParam("time") String time,
+			@RequestParam("assetName") String assetName
+			)
+	{
+		Map<String,Object> result=new HashMap<String,Object>();
+		try {
+			deviceUsingService.updateUsing(date, deviceUser, timeLong, assetId, teacher, time, assetName);;
+			result.put("status", "success");
+			System.out.println("###deviceUsing update success####"+assetId);
+		}catch(Exception e)
+		{
+			System.out.println("###deviceUsing apply failed###"+assetId);
+			result.put("status", e);
+		}
+		return result;
+	
+	}
 }

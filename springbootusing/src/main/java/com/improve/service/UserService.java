@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.improve.dao.UserDao;
+import com.improve.entity.Device;
 import com.improve.entity.User;
 
 @Service
@@ -43,6 +44,7 @@ public class UserService {
 		userDao.delete(user);
 	}
 	
+	@Transactional
 	public void deleteById(Integer id)
 	{
 		User user=userDao.findOne(id);
@@ -52,6 +54,32 @@ public class UserService {
 	public List<User> findAllUser()
 	{
 		return userDao.findAll();
+	}
+	
+	
+	@Transactional
+	public void upDateAge(Integer id,Integer newAge)
+	{
+		userDao.updateAge(id, newAge);
+	}
+	
+	@Transactional
+	public void updateUser(String userName,String role,Integer age,String telphone,String mail,String workId,
+			String passwd)
+	{
+		User user=userDao.findByWorkId(workId);
+		Integer id=user.getId();
+		userDao.updateUser(id, userName, role, age, telphone, mail, workId, passwd);
+	}
+	
+	public User findUserById(Integer id)
+	{
+		return userDao.findOne(id);
+	}
+	
+	public User findUserByWorkId(String workId)
+	{
+		return userDao.findByWorkId(workId);
 	}
 	
 	

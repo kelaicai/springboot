@@ -41,7 +41,7 @@ public class DeviceChangeService {
 	}
 	
 	//设备变更记录查询(设备Id)
-	public DeviceChange findByAssetId(String assetId)
+	public List<DeviceChange> findByAssetId(String assetId)
 	{
 		return deviceChangeDao.findByAssetId(assetId);
 	}
@@ -65,6 +65,17 @@ public class DeviceChangeService {
 	}
 	
 //
+	@Transactional
+	public void updateChange(String assetId,String assetName,String reason,String date,String proposer,String oldPlace,String newPlace)
+	{
+		List<DeviceChange> deviceChange=deviceChangeDao.findByAssetId(assetId);
+		Integer id=0;
+		for(DeviceChange deCh:deviceChange)
+		{
+			id=deCh.getId();
+		}
+		deviceChangeDao.updateChange(id, assetId, assetName, reason, date, proposer, oldPlace, newPlace);
+	}
 	
 	
 	

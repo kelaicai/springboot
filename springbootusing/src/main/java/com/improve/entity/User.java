@@ -16,7 +16,7 @@ public class User {
 	@GeneratedValue
 	private Integer id;
 
-	@Column
+	@Column(unique=true)
 	private String workId;
 	public String getWorkId() {
 		return workId;
@@ -27,17 +27,27 @@ public class User {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	
+	@Column
+	private String role="user";
+
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	@Column
-	private String userName;
+	private String userName="xxx";
 	@Column
-	private int age;
+	private int age=0;
 	@Column
-	private String telphone;
+	private String telphone="000";
 	@Column
-	private String mail;
+	private String mail="xxx@163.com";
 	@Column
-	private String passwd;
+	private String passwd="xxx";
 	
 	public String getPasswd() {
 		return passwd;
@@ -81,6 +91,7 @@ public class User {
 	{
 		Map<String,Object> result=new HashMap<String,Object>();
 		result.put("id",this.id);
+		result.put("workId", workId);
 		result.put("name", this.userName);
 		result.put("age",this.age);
 		result.put("telphone",this.age);
@@ -88,4 +99,5 @@ public class User {
 		
 		return result.toString();
 	}
+
 }

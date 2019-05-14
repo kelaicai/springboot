@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.persistence.Column;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,7 +77,7 @@ public class DeviceMaintenanceController {
 		@RequestMapping(value="/findMaintenanceById",method=RequestMethod.GET)
 		public DeviceMaintenance findMaintenanceById(@RequestParam("id") Integer id)
 		{
-			return null;
+			return maintenanceService.findById(id);
 		}
 		
 		@RequestMapping(value="/getAllMaintenance",method=RequestMethod.GET)
@@ -93,6 +94,32 @@ public class DeviceMaintenanceController {
 				System.out.println("###getAllMaintenance failed####");
 			}
 			return result;
+		}
+		
+		@RequestMapping(value="/updateMaintenance",method=RequestMethod.GET)
+		public Map<String,Object> updateMaintenance(
+				@RequestParam("assetId") String assetId,
+				@RequestParam("assetName") String assetName,
+				@RequestParam("date") String date,
+				@RequestParam("maintenancer") String maintenancer,
+				@RequestParam("content") String content,
+				@RequestParam("other") String other
+				
+				)
+		{
+			Map<String,Object> result=new HashMap<String,Object>();
+			try {
+		    maintenanceService.updateMaintenance(assetId, assetName, date, maintenancer, content, other);;
+		    result.put("status","success");
+		    System.out.println("###deviceMiantenance Update success###");
+		    
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+				System.out.println("###deviceMaintenance Update error###");
+				result.put("status","error");
+			}
+		    return result;
 		}
 		
 		

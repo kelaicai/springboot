@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.improve.dao.MaintenanceDao;
+import com.improve.entity.Device;
 import com.improve.entity.DeviceMaintenance;
 
 @Service
@@ -55,5 +56,18 @@ public class MaintenanceService {
 	{
 		DeviceMaintenance deviceMaintenance=maintenanceDao.findOne(id);
 		maintenanceDao.delete(deviceMaintenance);
+	}
+	
+	@Transactional
+	public void updateMaintenance(String assetId,String assetName,String date,String maintenancer,
+			String content,String other)
+	{
+		List<DeviceMaintenance> deviceMaintenance=maintenanceDao.findByAssetId(assetId);
+		Integer id=0;
+		for(DeviceMaintenance deCh:deviceMaintenance)
+		{
+			id=deCh.getId();
+		}
+		maintenanceDao.updateMaintenance(id, assetId, assetName, date, maintenancer, content, other);
 	}
 }

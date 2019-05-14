@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +38,7 @@ public class DeviceChangeController {
 	
 	//查询设备变更信息(by Id)
 	@RequestMapping(value="findByAssetId",method=RequestMethod.GET)
-	public DeviceChange findByAssetId(String assetId)
+	public List<DeviceChange> findByAssetId(String assetId)
 	{
 		return deviceChangeService.findByAssetId(assetId);
 	}
@@ -94,5 +95,44 @@ public class DeviceChangeController {
 			result.put("status", e);
 		}
 		return result;
+	}
+	
+	@GetMapping("/updateChange")
+	public Map<String,Object> updateRecord(
+			@RequestParam("assetId") String assetId,
+			@RequestParam("assetName") String assetName,
+			@RequestParam("reason") String reason,
+			@RequestParam("date") String date,
+			@RequestParam("proposer") String proposer,
+			@RequestParam("oldPlace") String oldPlace,
+			@RequestParam("newPlace") String newPlace)
+	{
+		Map<String,Object> result=new HashMap<String,Object>();
+		try
+		{
+			deviceChangeService.updateChange(assetId, assetName, reason, date, proposer, oldPlace, newPlace);;
+			result.put("status","success");
+			System.out.println("###updateChange success###"+assetId);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("###updateChange ### error"+assetId);
+			result.put("status", e);
+		}
+		return result;
+	}
+	
+	@GetMapping("/findChangeById")
+	public DeviceChange findUsingById(@RequestParam("id") Integer id)
+	{
+		DeviceChange deviceChange=null;
+		try {
+		deviceChange=deviceChangeService.findById(id);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return deviceChange;
 	}
 }

@@ -23,7 +23,7 @@ public class DeviceUsing {
 	@Column
 	private Integer timeLong; 
 	
-	@Column
+	@Column(unique=true)
 	private String assetId;
 	
 	@Column

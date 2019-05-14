@@ -21,7 +21,7 @@ public class DeviceChange{
 		this.id = id;
 	}
 
-	@Column
+	@Column(unique=true)
 	private String assetId;
 	
 	public String getAssetId() {

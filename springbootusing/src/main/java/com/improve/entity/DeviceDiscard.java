@@ -14,7 +14,7 @@ public class DeviceDiscard {
 		@GeneratedValue
 		private int id;
 		
-		@Column
+		@Column(unique=true)
 		private String assetId;
 		
 		
@@ -77,7 +77,5 @@ public class DeviceDiscard {
 		
 		@Column
 		private String date;
-
-
-		
+	
 }

@@ -17,7 +17,7 @@ public class Device {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Column
+	@Column(unique=true)
 	private String assetId;
 	@Column
 	private String gbClass;
@@ -43,12 +43,64 @@ public class Device {
 	private String getMethod;
 	@Column
 	private String getDate;
+	public String getAssetId() {
+		return assetId;
+	}
+
+	public void setAssetId(String assetId) {
+		this.assetId = assetId;
+	}
+
+	public String getAssetClass() {
+		return assetClass;
+	}
+
+	public void setAssetClass(String assetClass) {
+		this.assetClass = assetClass;
+	}
+
+	public String getAssetBigClass() {
+		return assetBigClass;
+	}
+
+	public void setAssetBigClass(String assetBigClass) {
+		this.assetBigClass = assetBigClass;
+	}
+
+	public String getAssetName() {
+		return assetName;
+	}
+
+	public void setAssetName(String assetName) {
+		this.assetName = assetName;
+	}
+
+	public String getIsUsed() {
+		return isUsed;
+	}
+
+	public void setIsUsed(String isUsed) {
+		this.isUsed = isUsed;
+	}
+
+	public String getIsDiscard() {
+		return isDiscard;
+	}
+
+	public void setIsDiscard(String isDiscard) {
+		this.isDiscard = isDiscard;
+	}
+
 	@Column
 	private String usingDepartment;
 	@Column
 	private String typeSpecification;
 	@Column
 	private String user;
+	@Column
+	private String isUsed="在用";
+	@Column 
+	private String isDiscard="否";
 	
 	
 	public String getUser() {

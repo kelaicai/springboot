@@ -54,6 +54,7 @@ public class DeviceMaintenance {
 	
 	@Column
 	private String assetId;
+	
 	public String getAssetId() {
 		return assetId;
 	}
